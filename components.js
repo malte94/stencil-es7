@@ -8,9 +8,23 @@ class Tooltip extends HTMLElement {
         this._tooltipContainer;
         this._tooltipText = 'The default text';
 
-        /* Shadow DOM */
+        /* Shadow DOM & Template */
 
         this.attachShadow({ mode: 'open' });
+
+        this.shadowRoot.innerHTML = `
+        
+        <style>
+            div {
+                background-color: black;
+                color: white;
+                position: absolute;
+                z-index: 10;
+            }
+        </style>
+        <slot>Some default</slot>
+        <span> (?)</span>
+    `;
 
         console.log('<udemy-tooltip> created.');
     }
@@ -18,19 +32,17 @@ class Tooltip extends HTMLElement {
     connectedCallback() {
         if (this.hasAttribute('text')) {
             this._tooltipText = this.getAttribute('text');
-        }
-        const tooltipIcon = document.createElement('span');
-        tooltipIcon.textContent = '(?) ';
-        tooltipIcon.addEventListener('mouseenter', this._showTooltip.bind(this)); // Wird nur an die Klasse gebunden
-        tooltipIcon.addEventListener('mouseleave', this._hideTooltip.bind(this)); // Wird nur an die Klasse gebunden
-         
-        this.shadowRoot.appendChild(tooltipIcon);
+          }
+          const tooltipIcon = this.shadowRoot.querySelector('span');
+          tooltipIcon.addEventListener('mouseenter', this._showTooltip.bind(this)); // Wird nur an die Klasse gebunden
+          tooltipIcon.addEventListener('mouseleave', this._hideTooltip.bind(this)); // Wird nur an die Klasse gebunden
+          this.shadowRoot.appendChild(tooltipIcon);
+
     }
 
     _showTooltip() { // _ indiziert für JS eine private Methode
         this._tooltipContainer = document.createElement('div');
         this._tooltipContainer.textContent = this._tooltipText;
-
         this.shadowRoot.appendChild(this._tooltipContainer);
     }
 
