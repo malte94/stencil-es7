@@ -13,7 +13,7 @@ class Tooltip extends HTMLElement {
         this.attachShadow({ mode: 'open' });
 
         this.shadowRoot.innerHTML = `
-        
+
         <style>
             div {
                 background-color: black;
@@ -52,3 +52,16 @@ class Tooltip extends HTMLElement {
 }
 
 customElements.define('udemy-tooltip', Tooltip);
+
+class ConfirmLink extends HTMLAnchorElement {
+    connectedCallback() {
+        this.addEventListener('click', event => {
+            if (!confirm('Do you really want to leave?')) {
+                event.preventDefault();
+            }
+        });
+    }
+}
+
+
+customElements.define('udemy-confirm-link', ConfirmLink, { extends: 'a' });
