@@ -6,14 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Components</title>
     <script src="components.js"></script>
+    <style>
+        * {
+          box-sizing: border-box;
+        }
+  
+        html {
+          --color-primary: #a4fcda;
+          font-family: sans-serif;
+        }
+      </style>
 </head>
 <body>
-    <p> It's a paragraph, hosting the element!
+    <p> It's a paragraph, hosting the element! <br>
         <udemy-tooltip class="important" text="Web Components is a set of standards">
-            Web Components are awesome!
+            Web Components are awesome! <br>
             <span class="highlight">I am a highlight within the component</span>
-        </udemy-tooltip>
-        <udemy-tooltip></udemy-tooltip>
+        </udemy-tooltip> <br>
+        <udemy-tooltip></udemy-tooltip> <br>
         <a is="udemy-confirm-link" href="https://google.de">Google</a>
     </p>
 </body>
