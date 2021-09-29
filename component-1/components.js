@@ -29,24 +29,22 @@ class Tooltip extends HTMLElement {
             }
 
             :host {
-                position: relative;
+              display: block;
+              position: relative;
+              padding: 40px;
             }
 
+                ::slotted(.highlight) {
+                  box-shadow: 1px 1px 5px red;
+                }
+
             :host(.important) {
-              background: var(--color-primary, #ccc);
+              background: red !important;
               padding: 0.15rem;
             }
 
             :host-context(p) {
               font-weight: bold;
-            }
-
-            .highlight {
-              background-color: red;
-            }
-
-            ::slotted(.highlight) {
-              border-bottom: 1px dotted red;
             }
 
             .icon {

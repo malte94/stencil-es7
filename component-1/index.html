@@ -18,13 +18,11 @@
       </style>
 </head>
 <body>
-    <p> It's a paragraph, hosting the element! <br>
-        <udemy-tooltip class="important" text="Web Components is a set of standards">
-            Web Components are awesome! <br>
-            <span class="highlight">I am a highlight within the component</span>
-        </udemy-tooltip> <br>
-        <udemy-tooltip></udemy-tooltip> <br>
-        <a is="udemy-confirm-link" href="https://google.de">Google</a>
-    </p>
+  <udemy-tooltip text="Web Components is a set of standards"> <!-- :host -->
+      Web Components are awesome! I am a :host! <br>
+      <span class="highlight">I am a span.highlight within the component. I do not adapt the style of :host. <br> Since I'm not really in the Shadow DOM, I can be designed either out of the Shadow DOM, or with :slotted! <br> Attention: I will also adapt the generic CSS styling! </span> <!-- :slotted(.important) -->
+  </udemy-tooltip> <br>
+  <udemy-tooltip></udemy-tooltip> <br>
+  <a is="udemy-confirm-link" href="https://google.de">Google</a>
 </body>
 </html>
