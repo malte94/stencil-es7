@@ -18,8 +18,19 @@
     <title>Web Components</title>
   </head>
   <body>
-   <uc-modal></uc-modal>
+    <uc-modal>
+      <h1 slot="slot-title">Please confirm</h1>
+      <p slot="slot-content">With your confirmation you agree to pay the full amount!</p> <!-- this is <slot> in Shadow DOM! -->
+    </uc-modal>
    <p>Please confirm your choice.</p>
    <button>Confirm</button>
+   <script>
+     const confirmButton = document.querySelector('button');
+     const modal = document.querySelector('uc-modal');
+
+     confirmButton.addEventListener('click', () => {
+      modal.open();
+    });
+  </script>
   </body>
 </html>
