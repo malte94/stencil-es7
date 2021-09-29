@@ -31,7 +31,7 @@ class Tooltip extends HTMLElement {
             :host {
               display: block;
               position: relative;
-              padding: 40px;
+              padding: 10px;
             }
 
                 ::slotted(.highlight) {
