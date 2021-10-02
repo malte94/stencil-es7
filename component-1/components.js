@@ -59,7 +59,6 @@ class Tooltip extends HTMLElement {
         <slot>Some default</slot>
         <span class="icon">?</span>
     `;
-
         console.log('<udemy-tooltip> created.');
     }
 

@@ -71,20 +71,27 @@ class Modal extends HTMLElement {
                   <slot name="slot-content">This would be the default text.</slot>
               </section>
               <section id="actions">
-                  <button>Cancel</button>
-                  <button>Okay</button>
+                  <button id="btn-cancel">Cancel</button>
+                  <button id="btn-confirm">Okay</button>
               </section>
           </div>
       `;
+
+      const slots = this.shadowRoot.querySelectorAll('slot');
+      slots[1].addEventListener('slotchange', event => {
+        console.dir(slots[1]);
+      });
+
+      const btnCancel = this.shadowRoot.querySelector('#btn-cancel');
+      const btnConfirm = this.shadowRoot.querySelector('#btn-confirm');
+
+      btnCancel.addEventListener('click', this._cancel.bind(this));
+      btnConfirm.addEventListener('click', this._confirm.bind(this));
     }
   
     attributeChangedCallback(name, oldValue, newValue) {
       if (this.hasAttribute('opened')) {
         this.isOpen = true;
-        // this.shadowRoot.querySelector('#backdrop').style.opacity = 1;
-        // this.shadowRoot.querySelector('#backdrop').style.pointerEvents = 'all';
-        // this.shadowRoot.querySelector('#modal').style.opacity = 1;
-        // this.shadowRoot.querySelector('#modal').style.pointerEvents = 'all';
       } else {
         this.isOpen = false;
       }
@@ -98,6 +105,30 @@ class Modal extends HTMLElement {
       this.setAttribute('opened', '');
       this.isOpen = true;
     }
+
+    hide() {
+        this.removeAttribute('opened');
+        this.isOpen = false;
+    }
+
+    _cancel(event) {
+        this.hide();
+        const cancelEvent = new Event('cancel', {
+            bubbles: true,
+            composed: true // Outside the Shadow DOM accessible
+        });
+        event.target.dispatchEvent(cancelEvent);
+    }
+
+    _confirm(event) {
+        this.hide();
+        const confirmEvent = new Event('confirm', {
+            bubbles: true,
+            composed: true // Outside the Shadow DOM accessible
+        });
+        event.target.dispatchEvent(confirmEvent);
+    }
+
   }
   
   customElements.define('uc-modal', Modal);
