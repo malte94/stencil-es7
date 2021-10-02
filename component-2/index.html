@@ -19,21 +19,16 @@
   </head>
   <body>
     <uc-modal>
-      <h1 slot="slot-title">Please confirm</h1>
-      <p slot="slot-content">With your confirmation you agree to pay the full amount!</p> <!-- this is <slot> in Shadow DOM! -->
+      <h1 slot="title">Please Confirm</h1>
+      <p>With your confirmation you agree to pay the full amount!</p>
     </uc-modal>
-   <p>Please confirm your choice.</p>
-   <button>Confirm</button>
-   <script>
-     const confirmButton = document.querySelector('button');
-     const modal = document.querySelector('uc-modal');
+    <p>Please confirm your choice.</p>
+    <button>Show Details & Confirm</button>
+    <script>
+      const confirmButton = document.querySelector('button');
+      const modal = document.querySelector('uc-modal');
 
-     confirmButton.addEventListener('click', () => {
-      modal.open();
-    });
-
-
-    modal.addEventListener('confirm', () => {
+      modal.addEventListener('confirm', () => {
         console.log('Confirmed...');
       });
 
@@ -41,6 +36,13 @@
         console.log('Cancelled...');
       });
 
-  </script>
+      confirmButton.addEventListener('click', () => {
+        //  modal.setAttribute('opened', '');
+        if (!modal.isOpen) {
+          modal.open();
+          console.log('Opening...');
+        }
+      });
+    </script>
   </body>
 </html>

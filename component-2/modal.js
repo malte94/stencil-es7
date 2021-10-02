@@ -65,10 +65,10 @@ class Modal extends HTMLElement {
           <div id="backdrop"></div>
           <div id="modal">
               <header>
-                  <slot name="slot-title">This would be the default text.</slot>
+                  <slot name="slot-title">Default title.</slot>
               </header>
               <section id="main">
-                  <slot name="slot-content">This would be the default text.</slot>
+                  <slot name="slot-content">Default text.</slot>
               </section>
               <section id="actions">
                   <button id="btn-cancel">Cancel</button>
@@ -84,9 +84,11 @@ class Modal extends HTMLElement {
 
       const btnCancel = this.shadowRoot.querySelector('#btn-cancel');
       const btnConfirm = this.shadowRoot.querySelector('#btn-confirm');
+      const backdrop = this.shadowRoot.querySelector('#backdrop');
 
       btnCancel.addEventListener('click', this._cancel.bind(this));
       btnConfirm.addEventListener('click', this._confirm.bind(this));
+      backdrop.addEventListener('click', this._cancel.bind(this));
     }
   
     attributeChangedCallback(name, oldValue, newValue) {
@@ -131,5 +133,5 @@ class Modal extends HTMLElement {
 
   }
   
-  customElements.define('uc-modal', Modal);
+customElements.define('uc-modal', Modal);
   
