@@ -1,15 +1,29 @@
-import { Component, h } from "@stencil/core";
+import { Component, Prop, h } from '@stencil/core';
 
 @Component({
-    tag: 'uc-side-drawer',
-    styleUrl: './side-drawer.css'
+  tag: 'uc-side-drawer',
+  styleUrl: './side-drawer.css',
+  shadow: true
 })
-
 export class SideDrawer {
-    render() {
-        return (
-            <aside>
-                <h1>The Side Drawer</h1>
-            </aside>
-    )}
+  @Prop({ reflect: true }) title: string;
+  @Prop({ reflect: true, mutable: true }) open: boolean;
+
+  onCloseDrawer() {
+    this.open = false;
+  }
+
+  render() {
+    return (
+      <aside>
+        <header>
+          <h1>{this.title}</h1>
+          <button onClick={this.onCloseDrawer.bind(this)}>X</button>
+        </header>
+        <main>
+          <slot />
+        </main>
+      </aside>
+    );
+  }
 }
