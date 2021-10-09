@@ -1,4 +1,4 @@
-import { Element, Component, h, State} from "@stencil/core";
+import { Element, Component, h, State, Prop, Watch} from "@stencil/core";
 import { AV_API_KEY } from '../../global/global';
 
 @Component({
@@ -9,11 +9,22 @@ import { AV_API_KEY } from '../../global/global';
 
 export class StockPrice {
     stockInput: HTMLInputElement;
+    initialStockSymbol: string;
     @Element() html: HTMLElement; // Access to HTML DOM Elements from Shadow DOM
     @State() price: number;
     @State() stockUserInput: string;
     @State() stockInputValid = false;
     @State() error: string;
+    
+    @Prop({mutable: true, reflect: true}) stockSymbol: string;
+
+    @Watch('stockSymbol')
+    stockSymbolChanged(newValue: string, oldValue: string) {
+        if(newValue !== oldValue) {
+            this.stockUserInput = newValue;
+            this.fetchStockPrice(newValue);
+        }
+    }
 
     onUserInput(event: Event) {
         this.stockUserInput = (event.target as HTMLInputElement).value;
@@ -26,7 +37,10 @@ export class StockPrice {
 
     onFetchStockPrice(event: Event) {
         event.preventDefault();
-        const DOMStockSymbol = this.stockInput.value;
+        this.stockSymbol = this.stockInput.value;
+    }
+
+    fetchStockPrice(DOMStockSymbol: string) {
         fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${DOMStockSymbol}&apikey=${AV_API_KEY}`)
         .then(res => {
             return res.json();
@@ -45,6 +59,31 @@ export class StockPrice {
             console.log(err);
             this.error = err.message;
         })
+    }
+
+    componentWillLoad() {
+        this.stockUserInput = this.stockSymbol;
+        this.stockInputValid = true;
+    }
+
+    componentDidLoad() {
+        this.initialStockSymbol = this.stockSymbol;
+        if(this.stockSymbol) {
+            this.fetchStockPrice(this.stockSymbol);
+        }
+    }
+
+    componentWillUpdate() {
+        console.log('Component will update ...');
+    }
+
+    componentDidUpdate() {
+        // Update the component if HTML stock-symbol changed
+        if(this.stockSymbol !== this.initialStockSymbol) {
+            this.fetchStockPrice(this.stockSymbol);
+            this.stockUserInput = this.stockSymbol;
+        }
+        console.log('Component updated.');
     }
 
     render() {
