@@ -12,4 +12,15 @@
     <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component>
   </body>
   <uc-stock-price stock-symbol="AAPL"></uc-stock-price> <!-- Stencil automatically converts stock-symbol to stockSymbol Prop -->
+  <uc-stock-finder></uc-stock-finder>
+
+    <!--
+      <script>
+        const stockFinderEl = document.querySelector('uc-stock-finder');
+        stockFinderEl.addEventListener('ucSymbolSelected', event => {
+          console.log(event);
+        });
+      </script>
+    -->
+
 </html>
